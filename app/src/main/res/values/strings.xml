@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">떡잎 방범대 </string>
+    <string name="button_supervisor">교사용</string>
+    <string name="button_parent">학부모용</string>
+    <string name="action_connect">Connect</string>
+    <string name="action_arduinocode">Show Arduino code</string>
+    <string name="action_disconnect">Disconnect</string>
+    <string name="action_settings"></string>
+
+</resources>
