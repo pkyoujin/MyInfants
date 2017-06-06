@@ -1,30 +1,57 @@
 package lecture.mobile.youjin.myinfants;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     int Btn_s_clicked = 0;
 
+    SharedPreferences setting; //프레퍼런스 정의
+    SharedPreferences.Editor editor; //저장,기록을 위해 editor 정의
+
     //Main
-    Button btn_s, btn_p; // MainActivity
+    Button btn_s, btn_p;
 
     //Supervisor
     ImageView h1,h2,h3,h4,h5,h6,h7,h8,h9,h10,h11,h12,h13,h14,h15,h16,h17,h18,h19,h20;
     ImageButton add;
-    
+
+    //Parent
+    ListView list;
+
+    String[] dates = {
+            "The Wizard",
+            "The Tree",
+            "The Sky"
+    };
+
+    Integer[] images = {
+            R.drawable.empty,
+            R.drawable.full,
+            R.drawable.empty
+    };
+
+    String[] contests = {
+            "연락옴",
+            "연락올예정",
+            "연락오지않음"
+    };
 
 
-
-    SharedPreferences setting; //프레퍼런스 정의
-    SharedPreferences.Editor editor; //저장,기록을 위해 editor 정의
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +169,41 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 2 :
                 setContentView(R.layout.for_parent);
+
+                SMSList adapter = new SMSList(MainActivity.this);
+                list = (ListView) findViewById(R.id.list);
+                list.setAdapter(adapter);
+                list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        Toast.makeText(getBaseContext(), dates[+position], Toast.LENGTH_SHORT).show();
+                    }
+                });
+
                 break;
+        }
+    }
+
+    public class SMSList extends ArrayAdapter<String> {
+        private final Activity context;
+
+        public SMSList(Activity context) {
+            super(context, R.layout.listitem, dates);
+            this.context = context;
+        }
+
+        @Override
+        public View getView(int position, View view, ViewGroup parent) {
+            LayoutInflater inflater = context.getLayoutInflater();
+            View rowView = inflater.inflate(R.layout.listitem, null, true);
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.image );
+            TextView date = (TextView) rowView.findViewById(R.id.date);
+            TextView contents = (TextView) rowView.findViewById(R.id.contents);
+            date.setText(dates[position]);
+            imageView.setImageResource(images[position]);
+            contents.setText(contests[position]);
+            return rowView;
         }
     }
 }
