@@ -43,7 +43,8 @@
                     android:layout_height="60dp"
                     android:src="@drawable/empty"
                     android:adjustViewBounds="false"
-                    android:scaleType="fitCenter"/>
+                    android:scaleType="fitCenter"
+                    android:onClick="onClickNumber"/>
 
                 <ImageView
                     android:id="@+id/heart2"
